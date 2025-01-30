@@ -81,6 +81,11 @@ RUN wget https://github.com/coder/code-server/releases/download/v${VERSION}/code
 # Создаем пользователя
 RUN useradd -m -s /bin/bash code-server-user
 
+# Создаем workspace
+RUN mkdir -p /home/code-server-user/workspace && \
+    chown -R code-server-user:code-server-user /home/code-server-user/workspace && \
+    chmod -R 755 /home/code-server-user/workspace
+
 # Копируем entrypoint 
 COPY scripts/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

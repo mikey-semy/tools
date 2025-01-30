@@ -74,8 +74,15 @@ RUN wget https://github.com/coder/code-server/releases/download/v${VERSION}/code
 # Создаем пользователя
 RUN useradd -m -s /bin/bash code-server-user
 
+# Копируем entrypoint 
+COPY scripts/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 # Устанавливаем рабочую директорию
 WORKDIR /home/code-server-user
+
+# Переключаемся на пользователя
+USER code-server-user
 
 # Копируем файлы проекта
 COPY . .
@@ -83,10 +90,5 @@ COPY . .
 # Открываем порты
 EXPOSE 8080 5173 8000
 
-# Переключаемся на пользователя
-USER code-server-user
-
 # Запускаем code-server
-COPY scripts/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
 CMD ["/entrypoint.sh"]

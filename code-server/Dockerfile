@@ -57,10 +57,13 @@ RUN python3 -m venv /opt/venv
 # Устанавливаем UV
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-# Устанавливаем npm и yarn
+# Устанавливаем Node.js и npm
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get install -y nodejs && \
-    npm install --global yarn
+    apt-get clean
+
+# Устанавливаем yarn
+RUN npm install --global yarn
 
 # Устанавливаем code-server
 ARG VERSION=4.93.1
@@ -76,9 +79,6 @@ WORKDIR /home/code-server-user
 
 # Копируем файлы проекта
 COPY . .
-
-# Устанавливаем зависимости через uv
-RUN uv sync --frozen --no-cache
 
 # Открываем порты
 EXPOSE 8080 5173 8000

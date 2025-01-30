@@ -83,8 +83,9 @@ RUN useradd -m -s /bin/bash code-server-user
 
 # Создаем workspace
 RUN mkdir -p /home/code-server-user/workspace && \
-    chown -R code-server-user:code-server-user /home/code-server-user/workspace && \
-    chmod -R 755 /home/code-server-user/workspace
+    mkdir -p /home/code-server-user/scripts && \
+    chown -R code-server-user:code-server-user /home/code-server-user && \
+    chmod -R 755 /home/code-server-user
 
 RUN chown -R code-server-user:code-server-user /home/code-server-user/scripts
 

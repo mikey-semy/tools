@@ -54,6 +54,9 @@ RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* 
 # Создаем виртуальное окружение
 RUN python3 -m venv /opt/venv
 
+# Установка Poetry
+RUN pip3 install poetry
+
 # Устанавливаем UV
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 

@@ -57,8 +57,10 @@ RUN python3 -m venv /opt/venv
 # Устанавливаем UV
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-# Устанавливаем yarn
-RUN npm install --global yarn
+# Устанавливаем npm и yarn
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install --global yarn
 
 # Устанавливаем code-server
 ARG VERSION=4.93.1

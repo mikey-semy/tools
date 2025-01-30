@@ -51,8 +51,12 @@ RUN for version in 3.11.11 3.12.3 3.13.0; do \
 RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
     && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
+# Создаем пользователя
+RUN useradd -m -s /bin/bash code-server-user
+
 # Создаем виртуальное окружение
-RUN python3 -m venv /opt/venv
+RUN python3 -m venv /opt/venv && \
+    chown -R code-server-user:code-server-user /opt/venv
 
 # Установка Poetry
 RUN pip3 install poetry
@@ -80,9 +84,6 @@ ARG VERSION=4.93.1
 RUN wget https://github.com/coder/code-server/releases/download/v${VERSION}/code-server_${VERSION}_amd64.deb && \
     dpkg -i code-server_${VERSION}_amd64.deb && \
     rm code-server_${VERSION}_amd64.deb
-
-# Создаем пользователя
-RUN useradd -m -s /bin/bash code-server-user
 
 # Создаем workspace
 RUN mkdir -p /home/code-server-user/workspace && \

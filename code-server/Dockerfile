@@ -57,6 +57,13 @@ RUN python3 -m venv /opt/venv
 # Устанавливаем UV
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
+# Устанавливаем GitHub CLI
+RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /usr/share/keyrings/githubcli-archive-keyring.gpg > /dev/null && \
+    echo "deb [signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null && \
+    apt-get update && \
+    apt-get install -y gh && \
+    apt-get clean
+    
 # Устанавливаем Node.js и npm
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get install -y nodejs && \

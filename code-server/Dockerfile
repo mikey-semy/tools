@@ -86,6 +86,8 @@ RUN mkdir -p /home/code-server-user/workspace && \
     chown -R code-server-user:code-server-user /home/code-server-user/workspace && \
     chmod -R 755 /home/code-server-user/workspace
 
+RUN chown -R code-server-user:code-server-user /home/code-server-user/scripts
+
 # Копируем entrypoint 
 COPY scripts/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

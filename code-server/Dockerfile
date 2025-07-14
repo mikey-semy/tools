@@ -80,7 +80,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
 RUN npm install --global yarn
 
 # Устанавливаем code-server
-ARG VERSION=4.93.1
+ARG VERSION=4.101.2
 RUN wget https://github.com/coder/code-server/releases/download/v${VERSION}/code-server_${VERSION}_amd64.deb && \
     dpkg -i code-server_${VERSION}_amd64.deb && \
     rm code-server_${VERSION}_amd64.deb
